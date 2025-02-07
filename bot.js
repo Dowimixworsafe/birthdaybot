@@ -218,21 +218,14 @@ client.on("interactionCreate", async (interaction) => {
             .toString()
             .padStart(2, "0")}/${selectedDay.toString().padStart(2, "0")}`;
 
-          const modal = new ModalBuilder()
-            .setCustomId("copy_modal")
-            .setTitle("Gotowa komenda");
+          await interaction.channel.send({
+            content: `\`\`\`\nKomenda do skopiowania:\n/set date:${formattedDate} time_zone:Europe/Warsaw\n**Wklej ją w polu tekstowym i wyślij!!!**\n\`\`\``,
+          });
 
-          const textInput = new TextInputBuilder()
-            .setCustomId("copy_text_input")
-            .setLabel("Skopiuj komendę poniżej:")
-            .setStyle(TextInputStyle.Paragraph)
-            .setValue(`/set date:${formattedDate} time_zone:Europe/Warsaw`)
-            .setRequired(true);
-
-          const row = new ActionRowBuilder().addComponents(textInput);
-          modal.addComponents(row);
-
-          await interaction.showModal(modal);
+          await interaction.reply({
+            content: "✅ Komenda została wygenerowana i wysłana na czat.",
+            ephemeral: true,
+          });
 
           // Po 10 sekundach zapytaj o zakończenie konfiguracji
           setTimeout(async () => {
@@ -272,15 +265,6 @@ client.on("interactionCreate", async (interaction) => {
           ephemeral: true,
         });
       }
-    }
-
-    if (interaction.isModalSubmit() && interaction.customId === "copy_modal") {
-      const copyText = interaction.fields.getTextInputValue("copy_text_input");
-
-      await interaction.reply({
-        content: `Komenda do skopiowania:\n\`${copyText}\`\n**Wklej ją w polu tekstowym i wyślij!!!**`,
-        ephemeral: true,
-      });
     }
 
     if (interaction.isButton()) {
