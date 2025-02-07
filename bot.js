@@ -219,7 +219,7 @@ client.on("interactionCreate", async (interaction) => {
             .padStart(2, "0")}/${selectedDay.toString().padStart(2, "0")}`;
 
           await interaction.reply({
-            content: `\`\`\`\nKomenda do skopiowania:\n/set date:${formattedDate} time_zone:Europe/Warsaw\n**Wklej ją w polu tekstowym i wyślij!!!**\n\`\`\``,
+            content: `\`\`\`/set date:${formattedDate} time_zone:Europe/Warsaw\`\`\`\n **Wklej ją poniżej i wyślij!**`,
             ephemeral: true,
           });
 
